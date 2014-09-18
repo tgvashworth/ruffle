@@ -1,0 +1,18 @@
+{
+  "name": "ruffle",
+  "version": "0.0.0",
+  "description": "",
+  "main": "ruffle/index.js",
+  "scripts": {
+    "test": "make test",
+    "start": "make watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "watchify": "^1.0.2",
+    "browserify": "^5.11.0",
+    "tape": "^2.14.0",
+    "faucet": "0.0.1"
+  }
+}
