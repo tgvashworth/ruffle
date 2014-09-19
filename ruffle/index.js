@@ -40,24 +40,6 @@ ruffle.component = function component() {
     );
 };
 
-// React-like
-ruffle.createClass = function createClass(base, config) {
-    if (arguments.length === 1) {
-        config = base;
-        base = ruffle.base;
-    }
-    return ruffle.compose(
-        base,
-        function ($) {
-            $.props = $.attr;
-            return Object.keys(config).reduce(function ($, k) {
-                $.after(k, config[k]);
-                return $;
-            }, $);
-        }
-    );
-};
-
 ruffle.base = ruffle.compose(
     ruffle.mixins.base,
     ruffle.mixins.initialize,
