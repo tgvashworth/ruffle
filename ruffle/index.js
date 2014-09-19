@@ -45,7 +45,8 @@ ruffle.base = ruffle.compose(
     ruffle.mixins.initialize,
     ruffle.mixins.attributes,
     ruffle.mixins.advice,
-    ruffle.mixins.events
+    ruffle.mixins.events,
+    ruffle.mixins.dom
 );
 
 ruffle.attach = function ($, selector, attr) {

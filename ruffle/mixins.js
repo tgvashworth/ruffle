@@ -90,4 +90,16 @@ mixins.events = function events($) {
     return $;
 };
 
+mixins.dom = function dom($) {
+    $.select = function (selector) {
+        return $.node.querySelector(selector);
+    };
+
+    $.selectAll = function (selector) {
+        return _.arr($.node.querySelectorAll(selector));
+    };
+
+    return $;
+};
+
 module.exports = mixins;
