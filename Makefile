@@ -3,28 +3,24 @@ SHELL := /bin/bash
 browserify := node_modules/.bin/browserify
 watchify := node_modules/.bin/watchify
 
-ENTRY     	:= app.js
-DEST 	 	:= build/bundle.js
-TRANSFORMS 	:=
-TESTS 		:= $(wildcard test/*.test.js)
+SRC 		:= $(wildcard ruffle/*.js)
+TEST_ENTRY	:= test/index.test.js
+TEST_BUNDLE := test/bundle.test.js
+TEST_HTML 	:= test/test.html
 
-.PHONY: all watch clean install test
+.PHONY: all watch clean install test watch-test
 
-all: $(DEST)
+all: install test
 
 install: package.json
 	npm install
 
-clean:
-	rm -rf $(dir $(DEST))
+test: $(SRC) $(TEST_BUNDLE)
+	@open $(TEST_HTML)
 
-watch: $(DEST)
-	watchify $(ENTRY) $(TRANSFORMS) -o $(DEST) -vd
+watch-test: $(SRC) $(TEST_BUNDLE) test
+	watchify $(TEST_ENTRY) $(TRANSFORMS) -o $(TEST_BUNDLE) -vd
 
-test:
-	@tape $(TESTS) | faucet
-
-$(DEST): $(shell browserify $(TRANSFORMS) --list $(ENTRY))
-	make install
+$(TEST_BUNDLE): install $(shell browserify $(TRANSFORMS) --list $(TEST_ENTRY))
 	mkdir -p $(dir $@)
-	browserify $(TRANSFORMS) $(ENTRY) > $@
+	browserify $(TRANSFORMS) $(TEST_ENTRY) > $@

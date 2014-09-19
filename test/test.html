@@ -1,0 +1,22 @@
+<!doctype html>
+<meta charset="utf-8">
+<title></title>
+
+<pre id="out"></pre>
+
+<script>
+    function run() {
+        location.reload();
+    }
+    window.location.hash = parseInt((window.location.hash || '#0').slice(1), 10) + 1;
+    requestAnimationFrame(function () {
+        setTimeout(run, 3000);
+    });
+
+    console._log = console.log;
+    console.log = function () {
+        window.out.textContent += [].join.call(arguments, ' ') + '\n';
+        console._log.apply(console, arguments);
+    };
+</script>
+<script src="bundle.test.js"></script>
