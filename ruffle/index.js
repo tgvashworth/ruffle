@@ -1,6 +1,6 @@
 'use strict';
 
-var _ = require('./lib');
+var _ = require('fnkit');
 
 var ruffle = {};
 ruffle.mixins = require('./mixins');
@@ -8,7 +8,7 @@ ruffle._ = _;
 ruffle.utils = _;
 
 /**
- * Public API
+ * Core
  */
 
 ruffle.compose = _.reverseArgsTo(_.compose);
@@ -20,6 +20,19 @@ function wrap(fn) {
         return x;
     };
 }
+
+ruffle.base = ruffle.compose(
+    ruffle.mixins.base,
+    ruffle.mixins.initialize,
+    ruffle.mixins.attributes,
+    ruffle.mixins.advice,
+    ruffle.mixins.events,
+    ruffle.mixins.dom
+);
+
+/**
+ * Framework-specific
+ */
 
 // Flight-like
 // TODO generalise this so it's easy to add methods to the component function
@@ -39,15 +52,6 @@ ruffle.component = function component() {
         }
     );
 };
-
-ruffle.base = ruffle.compose(
-    ruffle.mixins.base,
-    ruffle.mixins.initialize,
-    ruffle.mixins.attributes,
-    ruffle.mixins.advice,
-    ruffle.mixins.events,
-    ruffle.mixins.dom
-);
 
 ruffle.attach = function ($, selector, attr) {
     return [].map.call(document.querySelectorAll(selector), function (elem) {

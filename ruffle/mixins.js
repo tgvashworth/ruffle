@@ -1,6 +1,6 @@
 'use strict';
 
-var _ = require('./lib');
+var _ = require('fnkit');
 
 var mixins = {};
 
@@ -31,8 +31,9 @@ mixins.advice = function advice($) {
         $[method] = $[method] || function () {};
         var original = $[method];
         $[method] = function () {
-            _.applyCtx(original, $, _.arr(arguments));
+            var res = _.applyCtx(original, $, _.arr(arguments));
             _.applyCtx(fn, $, _.arr(arguments));
+            return res;
         };
     };
     $.before = function (method, fn) {
@@ -40,7 +41,7 @@ mixins.advice = function advice($) {
         var original = $[method];
         $[method] = function () {
             _.applyCtx(fn, $, _.arr(arguments));
-            _.applyCtx(original, $, _.arr(arguments));
+            return _.applyCtx(original, $, _.arr(arguments));
         };
     };
     return $;
